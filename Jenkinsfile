@@ -8,6 +8,7 @@ pipeline {
     stages {
         stage("Test") {
             steps {
+                sh 'mvn -f /app/pom.xml '
                 sh 'mvn test'
                 echo "========executing A for Test========"
                 // Add your test commands here (e.g., mvn test)
