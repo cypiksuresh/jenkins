@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         // Corrected typo in 'maven' tool
-        maven 'maven'
+        maven 'manven'
     }
     
     stages {
