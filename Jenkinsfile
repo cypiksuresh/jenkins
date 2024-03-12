@@ -26,7 +26,7 @@ pipeline {
         
         stage("Deploy on Test") {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://34.68.64.209:8080/')], contextPath: '/home/suresh/app', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://34.68.64.209:8080')], contextPath: null, war: '**/*.war'              
                 echo "========executing A for Deploy on Test========"
                 // Add your deployment commands here (e.g., deploy on container)
             }
@@ -34,7 +34,7 @@ pipeline {
         
         stage("Deploy on Prod") {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://34.41.46.7:8080/')], contextPath: '/home/suresh/app', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails', path: '', url: 'http://34.41.46.7:8080')], contextPath: null, war: '**/*.war'              
                 echo "Deploying on Production"
                 // Add your deployment commands here for production deployment
             }
