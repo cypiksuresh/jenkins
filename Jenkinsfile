@@ -1,24 +1,24 @@
 pipeline {
     agent any
+    
     tools {
-        // Corrected typo in 'maven' tool
         maven 'Maven'
     }
     
     stages {
-        steps {
-        dir('/app') { // Change directory to where your pom.xml is located
-            sh 'mvn test'
+        stage("Test") {
+            steps {
+                dir('/app') {
+                    sh 'mvn test'
+                }
+                echo "========executing A for Test========"
+                // Add your test commands here (e.g., mvn test)
+            }
         }
-        echo "========executing A for Test========"
-        // Add your test commands here (e.g., mvn test)
-    }
-}
-    
         
         stage("Build") {
             steps {
-                 sh 'mvn package'
+                sh 'mvn package'
                 echo "========executing A for Build========"
                 // Add your build commands here (e.g., mvn package)
             }
