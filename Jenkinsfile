@@ -6,17 +6,19 @@ pipeline {
     }
     
     stages {
-        stage("Test") {
-            steps {
-                sh 'mvn test'
-                echo "========executing A for Test========"
-                // Add your test commands here (e.g., mvn test)
-            }
+        steps {
+        dir('/app') { // Change directory to where your pom.xml is located
+            sh 'mvn test'
         }
+        echo "========executing A for Test========"
+        // Add your test commands here (e.g., mvn test)
+    }
+}
+    
         
         stage("Build") {
             steps {
-                 sh 'mvn -f pom.xml package'
+                 sh 'mvn package'
                 echo "========executing A for Build========"
                 // Add your build commands here (e.g., mvn package)
             }
