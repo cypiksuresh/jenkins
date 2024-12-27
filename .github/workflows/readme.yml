@@ -18,7 +18,7 @@ jobs:
       - name: Terraform Plan and validate
         run: |
           echo "Working in directory: $WORKING_DIR"
-          cd terraform
+          cd $WORKING_DIR
           terraform init
           terraform plan -out tfplan
           terraform show -json tfplan > ../tfplan.json
