@@ -9,12 +9,22 @@ jobs:
     name: A job to call the shared workflow
     steps:
       - uses: actions/checkout@v3
+
+      # Debugging step to check the directory structure
+      - name: Debug directory
+        run: |
+          pwd                    # Print the current directory
+          ls -R                  # List all files and subdirectories recursively
+
+      # Navigate to the correct directory (use the path where your Terraform files are)
       - name: Terraform Plan and validate
         run: |
-          cd jenkins
+          cd terraform            # Change to the 'terraform' directory (adjust the path if needed)
           terraform init
           terraform plan -out tfplan
           terraform show -json tfplan > ../tfplan.json
+
+      # Run Checkov for policy validation
       - uses: cypiksuresh/shared-workflows/.github/actions/compliance-checkov-tfplan@master
         with:
           tf-policy-repo-token: ${{ secrets.GH_REPO_READ_IAC_TERRAFORM_POLICIES }}
