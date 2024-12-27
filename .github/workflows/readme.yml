@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Terraform Plan and validate
         run: |
-          cd terraform
+          cd jenkins
           terraform init
           terraform plan -out tfplan
           terraform show -json tfplan > ../tfplan.json
