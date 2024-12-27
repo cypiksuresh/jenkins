@@ -1,0 +1,21 @@
+name: Checkov Github Actions Step
+
+on:
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  run_tfplan_and_validate:
+    runs-on: ubuntu-latest
+    name: A job to call the shared workflow
+    steps:
+      - uses: actions/checkout@v3
+      - name: Terraform Plan and validate
+        run: |
+          cd terraform
+          terraform init
+          terraform plan -out tfplan
+          terraform show -json tfplan > ../tfplan.json
+      - uses: cypiksuresh/shared-workflows/.github/actions/compliance-checkov-tfplan@master
+        with:
+          tf-policy-repo-token: ${{ secrets.GH_REPO_READ_IAC_TERRAFORM_POLICIES }}
