@@ -19,7 +19,7 @@ jobs:
       # Navigate to the correct directory (use the path where your Terraform files are)
       - name: Terraform Plan and validate
         run: |
-          cd terraform            # Change to the 'terraform' directory (adjust the path if needed)
+          cd /home/runner/work/jenkins/jenkins  # Change to the 'jenkins' directory
           terraform init
           terraform plan -out tfplan
           terraform show -json tfplan > ../tfplan.json
