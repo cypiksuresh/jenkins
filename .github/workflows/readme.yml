@@ -1,30 +1,18 @@
-name: Checkov Github Actions Step
+name: Run Terraform Plan and Validate with Checkov
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
 
 jobs:
-  run_tfplan_and_validate:
+  run_checkov:
     runs-on: ubuntu-latest
-    name: A job to call the shared workflow
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout the repository
+        uses: actions/checkout@v3
 
-      # Debugging step to check the directory structure
-      - name: Debug directory
-        run: |
-          pwd                    # Print the current directory
-          ls -R                  # List all files and subdirectories recursively
-
-      # Navigate to the correct directory (use the path where your Terraform files are)
-      - name: Terraform Plan and validate
-        run: |
-          cd /home/runner/work/jenkins/jenkins  # Change to the 'jenkins' directory
-          terraform init
-          terraform plan -out tfplan
-          terraform show -json tfplan > ../tfplan.json
-
-      # Run Checkov for policy validation
-      - uses: cypiksuresh/shared-workflows/.github/actions/compliance-checkov-tfplan@master
+      - name: Run Checkov on Terraform plan
+        uses: cypiksuresh/shared-workflows/.github/actions/compliance-checkov-tfplan@master
         with:
           tf-policy-repo-token: ${{ secrets.GH_REPO_READ_IAC_TERRAFORM_POLICIES }}
+          file-path: 'tfplan.json'           # Path to tfplan.json relative to working-directory
+          working-directory: '/home/runner/work/jenkins/jenkins'  # The directory where tfplan.json is located
