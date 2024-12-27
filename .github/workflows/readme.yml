@@ -9,12 +9,15 @@ jobs:
     name: A job to call the shared workflow
     steps:
       - uses: actions/checkout@v3
-        name: Checkout Latest Code
-        with:
-          ref: ${{ github.sha }}  # Ensure the latest commit is checked out
+        name: Checkout the latest code
+
+      - name: Set working directory
+        id: set_working_dir
+        run: echo "WORKING_DIR=$(pwd)" >> $GITHUB_ENV
 
       - name: Terraform Plan and validate
         run: |
+          echo "Working in directory: $WORKING_DIR"
           cd terraform
           terraform init
           terraform plan -out tfplan
